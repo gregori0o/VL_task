@@ -14,15 +14,6 @@ class Join(object):
             self.right_reader.end_reading()
             exit(-1)
 
-    def get_left_and_right(self) -> Generator[(Chunk, Chunk)]:
-        for left_chunk in self.left_reader.get_chunk():
-            if left_chunk is None:
-                break
-            for right_chunk in self.right_reader.get_chunk():
-                if right_chunk is None:
-                    break
-                yield left_chunk, right_chunk
-
     def pretty_print(self, left_row: List[any], right_row: List[any]):
         row_format = "{:>15}" * (len(left_row) + len(right_row))
         print(row_format.format(*left_row, *right_row))

@@ -25,7 +25,7 @@ class CSVReader(object):
                 return i
         return None
 
-    def get_chunk(self) -> Generator[Optional[Chunk]]:
+    def get_chunk(self) -> Generator[Optional[Chunk], None, None]:
         while(True):
             chunk = []
             idx = 0
