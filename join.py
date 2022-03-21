@@ -8,6 +8,7 @@ LEFT = 'left'
 RIGHT = 'right'
 INNER = 'inner'
 join_types = [LEFT, RIGHT, INNER]
+CHUNK_SIZE = 1000
 
 if len(sys.argv) < 4:
     print(
@@ -23,11 +24,11 @@ if len(sys.argv) == 4:
     join_type = INNER
 else:
     join_type = sys.argv[4]
-    if join_type in join_types:
+    if join_type not in join_types:
         print("Invalid type of join: {}, correct types is {}".format(join_type, " ".join(join_types)))
         exit(-1)
 
-join = Join(sys.argv[1], sys.argv[2], sys.argv[3])
+join = Join(sys.argv[1], sys.argv[2], sys.argv[3], chunk_size=CHUNK_SIZE)
 if join_type == INNER:
     join.inner()
 elif join_type == LEFT:

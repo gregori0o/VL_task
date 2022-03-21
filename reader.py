@@ -5,7 +5,7 @@ Chunk = List[List[any]]
 
 
 class CSVReader(object):
-    def __init__(self, filepath: str, chunk_size: int = 100):
+    def __init__(self, filepath: str, chunk_size: int):
         self.chunk_size = chunk_size
         self.filepath = filepath
         try:
@@ -38,9 +38,9 @@ class CSVReader(object):
                     del chunk[:]
             if chunk:
                 yield chunk
-            yield None
             self.csvfile.seek(0)
             next(self.reader)
+            yield None
 
     def end_reading(self):
         self.csvfile.close()

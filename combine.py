@@ -1,13 +1,13 @@
-from reader import CSVReader, Chunk
-from typing import Generator, List
+from reader import CSVReader
+from typing import List
 
 
 class Join(object):
-    def __init__(self, left_filepath: str, right_filepath: str, column_name: str):
-        self.left_reader = CSVReader(left_filepath)
-        self.left_column = self.reader.set_column(column_name)
-        self.right_reader = CSVReader(right_filepath)
-        self.right_column = self.reader.set_column(column_name)
+    def __init__(self, left_filepath: str, right_filepath: str, column_name: str, chunk_size: int = 100):
+        self.left_reader = CSVReader(left_filepath, chunk_size)
+        self.left_column = self.left_reader.set_column(column_name)
+        self.right_reader = CSVReader(right_filepath, chunk_size)
+        self.right_column = self.right_reader.set_column(column_name)
         if self.left_column is None or self.right_column is None:
             print("Invalid name of column - {}".format(column_name))
             self.left_reader.end_reading()
@@ -25,8 +25,8 @@ class Join(object):
                 break
             left_values = dict()
             for row in left_chunk:
-                tmp = left_values.get(row[self.left_column], set())
-                tmp.add(row)
+                tmp = left_values.get(row[self.left_column], [])
+                tmp.append(row)
                 left_values[row[self.left_column]] = tmp
             for right_chunk in self.right_reader.get_chunk():
                 if right_chunk is None:
@@ -40,14 +40,14 @@ class Join(object):
 
     def right(self):
         self.pretty_print(self.left_reader.headers, self.right_reader.headers)
-        left_none = [None] * len(self.left_reader.headers)
+        left_none = ['None'] * len(self.left_reader.headers)
         for left_chunk in self.left_reader.get_chunk():
             if left_chunk is None:
                 break
             left_values = dict()
             for row in left_chunk:
-                tmp = left_values.get(row[self.left_column], set())
-                tmp.add(row)
+                tmp = left_values.get(row[self.left_column], [])
+                tmp.append(row)
                 left_values[row[self.left_column]] = tmp
             for right_chunk in self.right_reader.get_chunk():
                 if right_chunk is None:
