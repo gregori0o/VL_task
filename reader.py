@@ -1,5 +1,5 @@
 import csv
-from typing import List, Optional
+from typing import List, Optional, Generator
 
 Chunk = List[List[any]]
 
@@ -9,7 +9,7 @@ class CSVReader(object):
         self.chunk_size = chunk_size
         self.filepath = filepath
         try:
-            self.csvfile = open(filepath)
+            self.csvfile = open(filepath, 'r')
             self.reader = csv.reader(self.csvfile)
         except:
             print("File {} can not be opened!".format(self.filepath))
@@ -25,7 +25,7 @@ class CSVReader(object):
                 return i
         return None
 
-    def get_chunk(self) -> Optional[Chunk]:
+    def get_chunk(self) -> Generator[Optional[Chunk]]:
         while(True):
             chunk = []
             idx = 0
@@ -36,13 +36,11 @@ class CSVReader(object):
                     yield chunk
                     idx = 0
                     del chunk[:]
-                    #chunk = []
             if chunk:
                 yield chunk
             yield None
-            #todo coś żeby self.reader od nowa leciał
+            self.csvfile.seek(0)
+            next(self.reader)
 
     def end_reading(self):
         self.csvfile.close()
-
-
