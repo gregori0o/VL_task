@@ -38,14 +38,16 @@ class Join(object):
                     for element in left_rows:
                         self.pretty_print(element, row)
 
-    def right(self):
+    def left(self):
         self.pretty_print(self.left_reader.headers, self.right_reader.headers)
-        left_none = ['None'] * len(self.left_reader.headers)
+        right_none = ['None'] * len(self.right_reader.headers)
         for left_chunk in self.left_reader.get_chunk():
             if left_chunk is None:
                 break
+            visited = dict()
             left_values = dict()
             for row in left_chunk:
+                visited[row[self.left_column]] = False
                 tmp = left_values.get(row[self.left_column], [])
                 tmp.append(row)
                 left_values[row[self.left_column]] = tmp
@@ -55,15 +57,23 @@ class Join(object):
                 for row in right_chunk:
                     left_rows = left_values.get(row[self.right_column], None)
                     if left_rows is None:
-                        self.pretty_print(left_none, row)
                         continue
+                    visited[row[self.right_column]] = True
                     for element in left_rows:
                         self.pretty_print(element, row)
+            for key, val in visited.items():
+                if val:
+                    continue
+                left_rows = left_values.get(key, None)
+                if left_rows is None:
+                    continue
+                for element in left_rows:
+                    self.pretty_print(element, right_none)
 
-    def left(self):
+    def right(self):
         self.left_reader, self.right_reader = self.right_reader, self.left_reader
         self.left_column, self.right_column = self.right_column, self.left_column
-        self.right()
+        self.left()
 
     def end_join(self):
         self.left_reader.end_reading()
