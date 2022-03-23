@@ -13,8 +13,7 @@ CHUNK_SIZE = 1000
 
 def main():
     if len(sys.argv) < 4:
-        print(
-            "Not enough arguments! Correct function call is: ./join 'file_path' 'file_path' 'column_name' ['join_type'].")
+        print("Not enough arguments! Correct function call is: ./join 'file_path' 'file_path' 'column_name' ['join_type'].")
         exit(-1)
     if not os.path.exists(sys.argv[1]):
         print("File {} is not exists!".format(sys.argv[1]))

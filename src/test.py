@@ -33,7 +33,7 @@ id,name,address,num
 
 #if correct: print headers once, print data in 2-elements chunk, then None and repeat printing data
 def test_reader():
-    reader = CSVReader('../data/left.csv', 2)
+    reader = CSVReader('data/left.csv', 2)
     print("Headers: {}".format(",".join(reader.headers)))
     i = 1
     for chunk in reader.get_chunk():
@@ -44,17 +44,17 @@ def test_reader():
 
 #print inner join for 'address' column
 def test_inner():
-    join = Join('../data/left.csv', 'data/right.csv', 'address')
+    join = Join('data/left.csv', 'data/right.csv', 'address')
     join.inner()
 
 #print left join for 'num' column and size of chunk=3
 def test_left():
-    join = Join('../data/left.csv', 'data/right.csv', 'num', 3)
+    join = Join('data/left.csv', 'data/right.csv', 'num', 3)
     join.left()
 
 #test handle big file
 def test_big():
-    join = Join('../data/big.csv', 'data/big.csv', 'Order ID')
+    join = Join('data/big.csv', 'data/big.csv', 'Order ID')
     join.inner()
 
 

@@ -11,8 +11,8 @@ File can be much bigger than there is available memory on the machine.
 
 ## Execution
 
-Program can be executed on system Linux with a command:
-*./join.py file_path file_path column_name [join_type]*, where *join_type* is one of: *inner*, *left* and *right*.
+Program can be executed on system Linux from root directory with a command:
+*./src/join.py file_path file_path column_name [join_type]*, where *join_type* is one of: *inner*, *left* and *right*.
 If *join_type* is not specified, program will do inner join. Script [join.py](src/join.py) is in the *src* directory.
 It is possible to adjust script for windows by *pyinstaller* library.
 
