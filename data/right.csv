@@ -1,11 +1,3 @@
-id,name,address,num
-1,Marek,Krakow,1
-2,Magda,Huta,1
-3,Ola,Zakopane,8
-4,Zuza,Wroc,6
-5,Lukasz,Krakow,6
-6,Krzys,Wroc,4
-7,Grzes,Zakopane,8
-8,Tomek,Wawa,6
-9,Piotr,Wawa,3
-10,Jan,Wawa,3
+version https://git-lfs.github.com/spec/v1
+oid sha256:f9116cd2dfec14dd0bcad8a34f1ad3b43fdf77bdf54c1592e88228eb206eed58
+size 178
