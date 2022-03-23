@@ -41,10 +41,10 @@ It is very important to match right CHUNK_SIZE. This parameter should be big but
 I made tests for two small files and one big. 
 I tested generator for reading file in chunks. It behaves in line with expectations.
 I simulated inner and left join (right join work in the same way). I checked results by compare with files and results 
-are correct. After runnig test for big file I didn't see alarming increase of RAM usage.
-I didn't write automatic tests, because it requires using new code and libraries for join, 
-but this is not part of task. 
-
+are correct. Program does well with big file. I didn't see alarming increase of RAM usage.
+I didn't write automatic tests. I print result in standard output in app, so I must capture this for automatic tests. 
+It requires using new code and libraries for join. 
+This app is not complicated, so I think that check dividing into chunks is most important, and I did this.
 
 Results for tests:
 <img src="pics/test.png" alt="Result of tests" height="800"/>
